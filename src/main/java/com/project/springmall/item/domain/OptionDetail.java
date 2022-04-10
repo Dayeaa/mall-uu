@@ -1,4 +1,4 @@
-package com.project.springmall.entity;
+package com.project.springmall.item.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,21 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-
 import lombok.Getter;
 
 @Entity
 @Getter
-public class OptionType {
+public class OptionDetail {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne //여러 optionType이 하나의 Item에 해당
-  @JoinColumn(name = "item_id", nullable = false)
-  private Item item;
+  @ManyToOne //여러 optiondetail이 하나의 optiontype에 해당
+  @JoinColumn(name = "option_type_id", nullable = false)
+  private OptionType optiontype;
 
-  @Column(name = "option_type_name", nullable = false)
+  @Column(name = "option_detail_name", nullable = false)
   private String name;
 
-
+  @Column(name = "option_detail_price", nullable = false)
+  private int price;
 }
