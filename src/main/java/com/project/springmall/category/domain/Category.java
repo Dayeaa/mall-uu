@@ -1,4 +1,4 @@
-package com.project.springmall.entity;
+package com.project.springmall.category.domain;
 
 import java.util.List;
 
@@ -12,14 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.project.springmall.dto.CategoryDTO.CategoryDTOBuilder;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -27,19 +28,28 @@ public class Category {
   //부모정의
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name ="category_id")
-  private Category parent;
+  private Category mainCategory;
 
   //자식정의
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
-  private List<Category> children;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "mainCategory")
+  private List<Category> subCategory;
   
   @Column(name ="category_name")
   private String name;
-  
-  @Column(name ="category_depth")
+
+  @Column(name ="depth")
   private int depth;
 
-  public static CategoryDTOBuilder builder() {
-    return null;
+  
+
+  @Builder
+  public Category(Long id, Category mainCategory, String name, int depth) {
+    this.id = id;
+    this.mainCategory = mainCategory;
+    this.name = name;
+    this.depth = depth;
   }
+
+  
+
 }
